@@ -2,13 +2,13 @@
 
 # opOS build configuration - Bootable AF Edition
 NASM=nasm
-CC=i686-elf-gcc
-LD=i686-elf-ld
+CC=gcc
+LD=ld
 
 # Flags
 NASMFLAGS=-f elf32
-CFLAGS=-ffreestanding -O2 -Wall -Wextra -nostdlib -nostartfiles -nodefaultlibs
-LDFLAGS=-T link.ld -nostdlib
+CFLAGS=-Iinclude -m32 -ffreestanding -O2 -Wall -Wextra -nostdlib -nostartfiles -nodefaultlibs
+LDFLAGS=-m elf_i386 -T link.ld -nostdlib
 
 # Source files
 BOOT_SRC=src/boot.asm
@@ -18,6 +18,7 @@ MODULE_SYSTEM_SRC=src/module_system.c
 SECURITY_SRC=src/modules/security/security.c
 HWSCAN_SRC=src/modules/hardware_scanner/hwscan.c
 SHELL_SRC=src/modules/shell.c
+LIBC_SRC=src/libc.c
 
 # Object files
 BOOT_BIN=build/boot.bin
@@ -27,6 +28,7 @@ MODULE_SYSTEM_OBJ=build/module_system.o
 SECURITY_OBJ=build/security.o
 HWSCAN_OBJ=build/hwscan.o
 SHELL_OBJ=build/shell.o
+LIBC_OBJ=build/libc.o
 
 # Final output
 KERNEL_BIN=build/kernel.bin
@@ -59,16 +61,19 @@ $(HWSCAN_OBJ): $(HWSCAN_SRC)
 $(SHELL_OBJ): $(SHELL_SRC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(LIBC_OBJ): $(LIBC_SRC)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # Link everything
-$(KERNEL_BIN): $(ENTRY_OBJ) $(KERNEL_OBJ) $(MODULE_SYSTEM_OBJ) $(SECURITY_OBJ) $(HWSCAN_OBJ) $(SHELL_OBJ)
+$(KERNEL_BIN): $(ENTRY_OBJ) $(KERNEL_OBJ) $(MODULE_SYSTEM_OBJ) $(SECURITY_OBJ) $(HWSCAN_OBJ) $(SHELL_OBJ) $(LIBC_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 # Create bootable image
 $(OS_IMG): $(BOOT_BIN) $(KERNEL_BIN)
-	copy /b $(BOOT_BIN)+$(KERNEL_BIN) $(OS_IMG) >nul
+	cat $(BOOT_BIN) $(KERNEL_BIN) > $(OS_IMG)
 
 clean:
-	del /Q build\*.*
+	rm -f build/*
 
 run:
 	qemu-system-i386 -drive format=raw,file=$(OS_IMG)

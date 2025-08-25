@@ -1,5 +1,9 @@
 // opOS Kernel - Modular and Paranoid AF
-#include "../include/module_system.h"
+#include "module_system.h"
+#include <string.h>
+#include "kernel.h"
+#include "libc.h"
+#include "shell.h"
 
 #define MAX_CMD_LEN 256
 #define MAX_PATH_LEN 128
@@ -73,15 +77,30 @@ void handle_command(void) {
 }
 
 void kernel_main(void) {
+    serial_init();
+    println("Kernel entry point reached.");
+
+    println("Initializing IDT...");
+    idt_init();
+    println("IDT initialized.");
+
+    println("Loading IDT...");
+    idt_load();
+    println("IDT loaded.");
     println("opOS v00 - if you are clinically, terry davis style paranoid");
     
-    // Initialize module system
+    println("Initializing module system...");
     module_system_init();
+    println("Module system initialized.");
     
-    // Register vital modules
+    println("Registering modules...");
     register_module(&security_module);
+    println("Security module registered.");
     register_module(&hwscan_module);
+    println("Hardware scanner module registered.");
     register_module(&shell_module);
+    println("Shell module registered.");
+    println("All modules registered.");
     
     // Try to boot vital modules
     if (load_vital_modules() != 0) {
