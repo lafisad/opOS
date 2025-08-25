@@ -22,31 +22,31 @@ SECTIONS {
         *(.rodata.*)
     }
 
-    /* Module information */
+    /* Module information - Updated for new system */
     .modinfo BLOCK(4K) : ALIGN(4K) {
         __start_modinfo = .;
-        *(.modinfo*)
+        KEEP(*(.modinfo*))
         __stop_modinfo = .;
     }
 
     /* Module names */
     .modname BLOCK(4K) : ALIGN(4K) {
-        *(.modname*)
+        KEEP(*(.modname*))
     }
 
     /* Module versions */
     .modversion BLOCK(4K) : ALIGN(4K) {
-        *(.modversion*)
+        KEEP(*(.modversion*))
     }
 
     /* Module descriptions */
     .moddesc BLOCK(4K) : ALIGN(4K) {
-        *(.moddesc*)
+        KEEP(*(.moddesc*))
     }
 
     /* Module authors */
     .modauthor BLOCK(4K) : ALIGN(4K) {
-        *(.modauthor*)
+        KEEP(*(.modauthor*))
     }
 
     /* Initialization functions */
