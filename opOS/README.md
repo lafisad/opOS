@@ -1,29 +1,74 @@
-# OPOS \[opOS\]
+# OPOS [opOS]
 
-## opOS - the 'operational Operating System'. (yeah, cool name.)
+## opOS - the 'operational Operating System'
 
+opOS is a security-focused, modular operating system designed for maximum control and transparency.
 
+## Core Principles
 
-opOS uses the following principals:
-1. Nothing works without the user. Set every module up **yourself**. If something doesn't work, you don't get to complain. You are the paranoid one here.
-2. **Modularity** is the big word here. You can only use what you allow the operating system to use.
-3. If you are *that* paranoid to use Linux or Windows, don't use any OS. opOS is meant for use if you're like *really*, ***really*** paranoid.
+1. **User Control**: Nothing works without explicit user configuration. Set up every module yourself.
+2. **Modularity**: The system is built from independent, replaceable components.
+3. **Transparency**: Every operation is visible and auditable.
+4. **Minimalism**: Include only what you need, nothing more.
 
 ## Current State
 
 ### Kernel
-- [ ] 
+- [x] Basic project structure
+- [x] Bootloader integration
+- [ ] Memory management
+- [ ] Process scheduling
+- [ ] Device drivers
+- [ ] Filesystem support
 
-### 
-- [ ] 
+### System Modules
+- [x] Booter module (basic implementation)
+- [ ] Memory manager
+- [ ] Process manager
+- [ ] Device manager
+- [ ] Filesystem drivers
 
-### 
-- [ ] 
+### Security Features
+- [ ] Module signing
+- [ ] Memory protection
+- [ ] Process isolation
+- [ ] Secure boot
 
+## Building and Running
 
+### Prerequisites
+- GCC cross-compiler for x86_64-elf
+- NASM
+- QEMU for emulation
 
+### Building
+```bash
+make all
+```
 
-## Misc.
+### Running in QEMU
+```bash
+make run
+```
 
-### Current contribs:
-- [owner - main dev](https://github.com/lafisad)
+### Cleaning build files
+```bash
+make clean
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Contributors
+
+- [owner - main dev][def]
+
+[def]: https://github.com/lafisad

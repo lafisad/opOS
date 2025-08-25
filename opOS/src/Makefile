@@ -37,4 +37,4 @@ clean:
 	rm -rf $(BUILDDIR)
 
 run: all
-	qemu-system-x86_64 -kernel $(BUILDDIR)/$(KERNEL) -serial stdio
+	qemu-system-x86_64 -kernel $(BUILDDIR)/$(KERNEL) -nographic

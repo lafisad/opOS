@@ -1,0 +1,25 @@
+begin FILE module_list -
+    begin ENTRY booter -
+        TYPE [volatileModule]
+        NAME 'booter'
+        DESC 'opOS' boot and init, do NOT remove. '
+        LANG 'c'
+        LOCATION 'sysmodules/booter'
+        PERMISSIONS 'OP'
+        VERSION '0.0.1'
+    - end ENTRY booter
+- end FILE module_list
+
+[ignore]
+begin ENTRY module
+    TYPE [volatileModule] or [module]
+    NAME 'module_name'
+    DESC 'module description'
+    LANG 'c'
+    LOCATION 'usermodules/module_name'
+    PERMISSIONS 'X'
+    VERSION 
+- end ENTRY module
+[ignore]
+
+
